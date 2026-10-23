@@ -168,7 +168,13 @@
       close.addEventListener('click', () => box.remove());
       box.append(icon, content, close);
       doc.body.append(box);
-      if (!error) win.setTimeout(() => box.remove(), 750);
+if (!error) win.setTimeout(() => {
+  const fade = box.animate(
+    [{ opacity: 1 }, { opacity: 0 }],
+    { duration: 300, fill: 'forwards' }
+  );
+  fade.onfinish = () => box.remove();
+}, 750);
     }
     async function apply(url) {
       const values = url.searchParams.getAll('model');
